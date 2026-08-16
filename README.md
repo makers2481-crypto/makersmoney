@@ -1,0 +1,75 @@
+[gemini-code-1786881669950.html](https://github.com/user-attachments/files/31116582/gemini-code-1786881669950.html)
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع تحت الصيانة</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 500px;
+            width: 85%;
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+        p {
+            color: #636e72;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+        .contact {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9em;
+            color: #b2bec3;
+        }
+        .contact a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .contact a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon">🚧</div>
+        <h1>الموقع تحت الصيانة</h1>
+        <p>نحن نعمل حالياً على تحديث وتطوير الموقع لتقديم تجربة أفضل لكم.<br>سنعود للعمل قريباً، شكراً لانتظاركم وتفهمكم!</p>
+        
+        <!-- يمكنك إزالة أو تعديل قسم التواصل أدناه حسب رغبتك -->
+        <div class="contact">
+            للتواصل العاجل: <a href="mailto:info@yourdomain.com">info@yourdomain.com</a>
+        </div>
+    </div>
+
+</body>
+</html>
