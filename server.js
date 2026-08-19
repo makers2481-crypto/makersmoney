@@ -14,7 +14,7 @@ redisClient.connect().then(() => console.log('Connected to Redis'));
 const transporter = nodemailer.createTransport({
     service: 'gmail', // يمكنك تغييره إلى Outlook أو أي مزود آخر
     auth: {
-        user: process.env.EMAIL_USER,       // إيميل موقعك الرسمي
+        user: process.env.EMAIL_USER,makers2481@gmail.com       // إيميل موقعك الرسمي
         pass: process.env.EMAIL_PASSWORD    // كلمة مرور التطبيق (App Password) وليس الباسورد العادي
     }
 });
