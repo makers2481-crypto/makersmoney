@@ -1,42 +1,57 @@
+// server.js
 const express = require('express');
-const cors = require('cors');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-// قم بتعديل هذه البيانات ببريد خدمة العملاء الخاص بك (مثلاً GMAIL)
-// يتطلب تفعيل App Passwords في حساب جوجل الخاص بك
+// إعداد خدمة البريد الإلكتروني (استبدل بالبيانات الخاصة بك)
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'makers2481@gmail.com', // الإيميل الخاص بك
-        pass: 'YOUR_APP_PASSWORD_HERE' // كلمة مرور التطبيق (App Password)
+        user: 'makers2481@gmail.com', // إيميل الشركة
+        pass: 'YOUR_EMAIL_PASSWORD_OR_APP_PASSWORD' // الرقم السري أو App Password
     }
 });
 
-app.post('/send-verification', (req, res) => {
-    const { email, id } = req.body;
+app.post('/api/verify-email', (req, res) => {
+    const { email, clientId } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ message: 'البريد الإلكتروني مطلوب' });
+    }
+
+    const verificationLink = `https://makers-of-money.com/verify?id=${clientId}`;
 
     const mailOptions = {
         from: 'makers2481@gmail.com',
-        to: email, // يتم الإرسال إلى إيميل العميل
-        subject: 'تأكيد الحساب - صناع المال (Makers of Money)',
-        text: `مرحباً بك عميلنا العزيز (رقم الحساب: ${id}) \n\n يرجى الرد على هذه الرسالة مع إرفاق صورة الهوية لتأكيد حسابك وتفعيل السحب.\n\n شكراً لاختيارك صناع المال.`
+        to: email,
+        subject: 'صناع المال - تحقق من بريدك الإلكتروني',
+        html: `
+            <div style="font-family: Arial, sans-serif; text-align: right; dir: rtl;">
+                <h2>مرحباً بك في صناع المال</h2>
+                <p>لقد طلبت التحقق من بريدك الإلكتروني.</p>
+                <p>الرجاء الضغط على الرابط التالي لتفعيل حسابك وإتاحة السحب:</p>
+                <a href="${verificationLink}" style="background-color: #d4af37; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">تأكيد البريد الإلكتروني</a>
+                <p>إذا لم تكن أنت من طلب ذلك، يرجى تجاهل هذه الرسالة.</p>
+            </div>
+        `
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
-            return res.status(500).send('Error sending email');
+            return res.status(500).json({ message: 'حدث خطأ أثناء إرسال البريد.' });
+        } else {
+            console.log('Email sent: ' + info.response);
+            return res.status(200).json({ message: 'تم إرسال بريد التحقق بنجاح.' });
         }
-        console.log('Email sent: ' + info.response);
-        res.status(200).send('Verification email sent successfully');
     });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
